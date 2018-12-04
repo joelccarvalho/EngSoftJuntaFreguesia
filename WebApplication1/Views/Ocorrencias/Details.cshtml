@@ -1,0 +1,50 @@
+﻿@model ModelProject.Ocorrencias
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ocorrencias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Anexos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anexos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoOcorrencias.Designacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoOcorrencias.Designacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Utilizadores.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Utilizadores.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

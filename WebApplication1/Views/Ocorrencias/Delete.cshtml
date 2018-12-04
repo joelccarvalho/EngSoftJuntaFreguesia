@@ -1,0 +1,56 @@
+﻿@model ModelProject.Ocorrencias
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ocorrencias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Anexos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anexos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoOcorrencias.Designacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoOcorrencias.Designacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Utilizadores.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Utilizadores.Nome)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CodigoPostal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Localidade" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InformacoesUteis">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Assunto" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Destinatario" Type="int" />
+          <Property Name="IdCodigoPostal" Type="int" />
+        </EntityType>
+        <EntityType Name="Ocorrencias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUtilizador" Type="int" Nullable="false" />
+          <Property Name="IdOcorrencias" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Anexos" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipoOcorrencias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designacao" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PermissoesUtilizador" Type="int" />
+        </EntityType>
+        <EntityType Name="TipoUtilizador">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilizadores">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="NumCC" Type="int" Nullable="false" />
+          <Property Name="NumEleitor" Type="int" />
+          <Property Name="Morada" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IdCodigoPostal" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="NomeUtilizador" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Estado" Type="tinyint" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FKInformacoe356796">
+          <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
+          <End Role="InformacoesUteis" Type="Self.InformacoesUteis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodigoPostal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InformacoesUteis">
+              <PropertyRef Name="IdCodigoPostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKInformacoe619905">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="0..1" />
+          <End Role="InformacoesUteis" Type="Self.InformacoesUteis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InformacoesUteis">
+              <PropertyRef Name="Destinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOcorrencia213251">
+          <End Role="TipoOcorrencias" Type="Self.TipoOcorrencias" Multiplicity="1" />
+          <End Role="Ocorrencias" Type="Self.Ocorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoOcorrencias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ocorrencias">
+              <PropertyRef Name="IdOcorrencias" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOcorrencia933020">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Ocorrencias" Type="Self.Ocorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ocorrencias">
+              <PropertyRef Name="IdUtilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKTipoOcorre404229">
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="0..1" />
+          <End Role="TipoOcorrencias" Type="Self.TipoOcorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUtilizador">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TipoOcorrencias">
+              <PropertyRef Name="PermissoesUtilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUtilizador424118">
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="1" />
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUtilizador">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utilizadores">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUtilizador949029">
+          <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodigoPostal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utilizadores">
+              <PropertyRef Name="IdCodigoPostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectDBModelStoreContainer">
+          <EntitySet Name="CodigoPostal" EntityType="Self.CodigoPostal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformacoesUteis" EntityType="Self.InformacoesUteis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ocorrencias" EntityType="Self.Ocorrencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoOcorrencias" EntityType="Self.TipoOcorrencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUtilizador" EntityType="Self.TipoUtilizador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FKInformacoe356796" Association="Self.FKInformacoe356796">
+            <End Role="CodigoPostal" EntitySet="CodigoPostal" />
+            <End Role="InformacoesUteis" EntitySet="InformacoesUteis" />
+          </AssociationSet>
+          <AssociationSet Name="FKInformacoe619905" Association="Self.FKInformacoe619905">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="InformacoesUteis" EntitySet="InformacoesUteis" />
+          </AssociationSet>
+          <AssociationSet Name="FKOcorrencia213251" Association="Self.FKOcorrencia213251">
+            <End Role="TipoOcorrencias" EntitySet="TipoOcorrencias" />
+            <End Role="Ocorrencias" EntitySet="Ocorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKOcorrencia933020" Association="Self.FKOcorrencia933020">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Ocorrencias" EntitySet="Ocorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKTipoOcorre404229" Association="Self.FKTipoOcorre404229">
+            <End Role="TipoUtilizador" EntitySet="TipoUtilizador" />
+            <End Role="TipoOcorrencias" EntitySet="TipoOcorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKUtilizador424118" Association="Self.FKUtilizador424118">
+            <End Role="TipoUtilizador" EntitySet="TipoUtilizador" />
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+          </AssociationSet>
+          <AssociationSet Name="FKUtilizador949029" Association="Self.FKUtilizador949029">
+            <End Role="CodigoPostal" EntitySet="CodigoPostal" />
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CodigoPostal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Localidade" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="InformacoesUteis" Relationship="Self.FKInformacoe356796" FromRole="CodigoPostal" ToRole="InformacoesUteis" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FKUtilizador949029" FromRole="CodigoPostal" ToRole="Utilizadores" />
+        </EntityType>
+        <EntityType Name="InformacoesUteis">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Assunto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destinatario" Type="Int32" />
+          <Property Name="IdCodigoPostal" Type="Int32" />
+          <NavigationProperty Name="CodigoPostal" Relationship="Self.FKInformacoe356796" FromRole="InformacoesUteis" ToRole="CodigoPostal" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FKInformacoe619905" FromRole="InformacoesUteis" ToRole="Utilizadores" />
+        </EntityType>
+        <EntityType Name="Ocorrencias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUtilizador" Type="Int32" Nullable="false" />
+          <Property Name="IdOcorrencias" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Anexos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TipoOcorrencias" Relationship="Self.FKOcorrencia213251" FromRole="Ocorrencias" ToRole="TipoOcorrencias" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FKOcorrencia933020" FromRole="Ocorrencias" ToRole="Utilizadores" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipoOcorrencias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designacao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PermissoesUtilizador" Type="Int32" />
+          <NavigationProperty Name="Ocorrencias" Relationship="Self.FKOcorrencia213251" FromRole="TipoOcorrencias" ToRole="Ocorrencias" />
+          <NavigationProperty Name="TipoUtilizador" Relationship="Self.FKTipoOcorre404229" FromRole="TipoOcorrencias" ToRole="TipoUtilizador" />
+        </EntityType>
+        <EntityType Name="TipoUtilizador">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TipoOcorrencias" Relationship="Self.FKTipoOcorre404229" FromRole="TipoUtilizador" ToRole="TipoOcorrencias" />
+          <NavigationProperty Name="Utilizadores" Relationship="Self.FKUtilizador424118" FromRole="TipoUtilizador" ToRole="Utilizadores" />
+        </EntityType>
+        <EntityType Name="Utilizadores">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumCC" Type="Int32" Nullable="false" />
+          <Property Name="NumEleitor" Type="Int32" />
+          <Property Name="Morada" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCodigoPostal" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NomeUtilizador" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Byte" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CodigoPostal" Relationship="Self.FKUtilizador949029" FromRole="Utilizadores" ToRole="CodigoPostal" />
+          <NavigationProperty Name="InformacoesUteis" Relationship="Self.FKInformacoe619905" FromRole="Utilizadores" ToRole="InformacoesUteis" />
+          <NavigationProperty Name="Ocorrencias" Relationship="Self.FKOcorrencia933020" FromRole="Utilizadores" ToRole="Ocorrencias" />
+          <NavigationProperty Name="TipoUtilizador" Relationship="Self.FKUtilizador424118" FromRole="Utilizadores" ToRole="TipoUtilizador" />
+        </EntityType>
+        <Association Name="FKInformacoe356796">
+          <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
+          <End Role="InformacoesUteis" Type="Self.InformacoesUteis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodigoPostal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InformacoesUteis">
+              <PropertyRef Name="IdCodigoPostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUtilizador949029">
+          <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodigoPostal">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utilizadores">
+              <PropertyRef Name="IdCodigoPostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKInformacoe619905">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="0..1" />
+          <End Role="InformacoesUteis" Type="Self.InformacoesUteis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InformacoesUteis">
+              <PropertyRef Name="Destinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOcorrencia213251">
+          <End Role="TipoOcorrencias" Type="Self.TipoOcorrencias" Multiplicity="1" />
+          <End Role="Ocorrencias" Type="Self.Ocorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoOcorrencias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ocorrencias">
+              <PropertyRef Name="IdOcorrencias" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKOcorrencia933020">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="Ocorrencias" Type="Self.Ocorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ocorrencias">
+              <PropertyRef Name="IdUtilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKTipoOcorre404229">
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="0..1" />
+          <End Role="TipoOcorrencias" Type="Self.TipoOcorrencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUtilizador">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TipoOcorrencias">
+              <PropertyRef Name="PermissoesUtilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKUtilizador424118">
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="1" />
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUtilizador">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utilizadores">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CodigoPostal" EntityType="Self.CodigoPostal" />
+          <EntitySet Name="InformacoesUteis" EntityType="Self.InformacoesUteis" />
+          <EntitySet Name="Ocorrencias" EntityType="Self.Ocorrencias" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TipoOcorrencias" EntityType="Self.TipoOcorrencias" />
+          <EntitySet Name="TipoUtilizador" EntityType="Self.TipoUtilizador" />
+          <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" />
+          <AssociationSet Name="FKInformacoe356796" Association="Self.FKInformacoe356796">
+            <End Role="CodigoPostal" EntitySet="CodigoPostal" />
+            <End Role="InformacoesUteis" EntitySet="InformacoesUteis" />
+          </AssociationSet>
+          <AssociationSet Name="FKUtilizador949029" Association="Self.FKUtilizador949029">
+            <End Role="CodigoPostal" EntitySet="CodigoPostal" />
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+          </AssociationSet>
+          <AssociationSet Name="FKInformacoe619905" Association="Self.FKInformacoe619905">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="InformacoesUteis" EntitySet="InformacoesUteis" />
+          </AssociationSet>
+          <AssociationSet Name="FKOcorrencia213251" Association="Self.FKOcorrencia213251">
+            <End Role="TipoOcorrencias" EntitySet="TipoOcorrencias" />
+            <End Role="Ocorrencias" EntitySet="Ocorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKOcorrencia933020" Association="Self.FKOcorrencia933020">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="Ocorrencias" EntitySet="Ocorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKTipoOcorre404229" Association="Self.FKTipoOcorre404229">
+            <End Role="TipoUtilizador" EntitySet="TipoUtilizador" />
+            <End Role="TipoOcorrencias" EntitySet="TipoOcorrencias" />
+          </AssociationSet>
+          <AssociationSet Name="FKUtilizador424118" Association="Self.FKUtilizador424118">
+            <End Role="TipoUtilizador" EntitySet="TipoUtilizador" />
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectDBModelStoreContainer" CdmEntityContainer="ProjectDBEntities">
+          <EntitySetMapping Name="CodigoPostal">
+            <EntityTypeMapping TypeName="ProjectDBModel.CodigoPostal">
+              <MappingFragment StoreEntitySet="CodigoPostal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Localidade" ColumnName="Localidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformacoesUteis">
+            <EntityTypeMapping TypeName="ProjectDBModel.InformacoesUteis">
+              <MappingFragment StoreEntitySet="InformacoesUteis">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Assunto" ColumnName="Assunto" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Destinatario" ColumnName="Destinatario" />
+                <ScalarProperty Name="IdCodigoPostal" ColumnName="IdCodigoPostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocorrencias">
+            <EntityTypeMapping TypeName="ProjectDBModel.Ocorrencias">
+              <MappingFragment StoreEntitySet="Ocorrencias">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IdUtilizador" ColumnName="IdUtilizador" />
+                <ScalarProperty Name="IdOcorrencias" ColumnName="IdOcorrencias" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Anexos" ColumnName="Anexos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProjectDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoOcorrencias">
+            <EntityTypeMapping TypeName="ProjectDBModel.TipoOcorrencias">
+              <MappingFragment StoreEntitySet="TipoOcorrencias">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Designacao" ColumnName="Designacao" />
+                <ScalarProperty Name="PermissoesUtilizador" ColumnName="PermissoesUtilizador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUtilizador">
+            <EntityTypeMapping TypeName="ProjectDBModel.TipoUtilizador">
+              <MappingFragment StoreEntitySet="TipoUtilizador">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilizadores">
+            <EntityTypeMapping TypeName="ProjectDBModel.Utilizadores">
+              <MappingFragment StoreEntitySet="Utilizadores">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="NumCC" ColumnName="NumCC" />
+                <ScalarProperty Name="NumEleitor" ColumnName="NumEleitor" />
+                <ScalarProperty Name="Morada" ColumnName="Morada" />
+                <ScalarProperty Name="IdCodigoPostal" ColumnName="IdCodigoPostal" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NomeUtilizador" ColumnName="NomeUtilizador" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
