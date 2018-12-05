@@ -57,6 +57,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RoleID" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Utilizadores">
           <Key>
@@ -73,6 +74,7 @@
           <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Estado" Type="tinyint" Nullable="false" />
           <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <Association Name="FKInformacoe356796">
           <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
@@ -261,6 +263,7 @@
           <Property Name="Tipo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TipoOcorrencias" Relationship="Self.FKTipoOcorre404229" FromRole="TipoUtilizador" ToRole="TipoOcorrencias" />
           <NavigationProperty Name="Utilizadores" Relationship="Self.FKUtilizador424118" FromRole="TipoUtilizador" ToRole="Utilizadores" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Utilizadores">
           <Key>
@@ -281,6 +284,7 @@
           <NavigationProperty Name="InformacoesUteis" Relationship="Self.FKInformacoe619905" FromRole="Utilizadores" ToRole="InformacoesUteis" />
           <NavigationProperty Name="Ocorrencias" Relationship="Self.FKOcorrencia933020" FromRole="Utilizadores" ToRole="Ocorrencias" />
           <NavigationProperty Name="TipoUtilizador" Relationship="Self.FKUtilizador424118" FromRole="Utilizadores" ToRole="TipoUtilizador" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FKInformacoe356796">
           <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
@@ -463,6 +467,7 @@
           <EntitySetMapping Name="TipoUtilizador">
             <EntityTypeMapping TypeName="ProjectDBModel.TipoUtilizador">
               <MappingFragment StoreEntitySet="TipoUtilizador">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </MappingFragment>
@@ -471,6 +476,7 @@
           <EntitySetMapping Name="Utilizadores">
             <EntityTypeMapping TypeName="ProjectDBModel.Utilizadores">
               <MappingFragment StoreEntitySet="Utilizadores">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="NumCC" ColumnName="NumCC" />

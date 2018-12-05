@@ -23,6 +23,7 @@ namespace ModelProject
     
         public int ID { get; set; }
         public string Tipo { get; set; }
+        public string RoleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoOcorrencias> TipoOcorrencias { get; set; }

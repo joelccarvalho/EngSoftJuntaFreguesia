@@ -32,6 +32,7 @@ namespace ModelProject
         public string Password { get; set; }
         public byte Estado { get; set; }
         public int Tipo { get; set; }
+        public string UserID { get; set; }
     
         public virtual CodigoPostal CodigoPostal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
