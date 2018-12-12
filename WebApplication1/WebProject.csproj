@@ -289,11 +289,6 @@
     <Content Include="Views\TipoUtilizadores\Details.cshtml" />
     <Content Include="Views\TipoUtilizadores\Edit.cshtml" />
     <Content Include="Views\TipoUtilizadores\Index.cshtml" />
-    <Content Include="Views\Utilizadores\Create.cshtml" />
-    <Content Include="Views\Utilizadores\Delete.cshtml" />
-    <Content Include="Views\Utilizadores\Details.cshtml" />
-    <Content Include="Views\Utilizadores\Edit.cshtml" />
-    <Content Include="Views\Utilizadores\Index.cshtml" />
     <Content Include="Views\Ocorrencias\Create.cshtml" />
     <Content Include="Views\Ocorrencias\Delete.cshtml" />
     <Content Include="Views\Ocorrencias\Details.cshtml" />
@@ -304,6 +299,11 @@
     <Content Include="Views\CodigoPostais\Details.cshtml" />
     <Content Include="Views\CodigoPostais\Edit.cshtml" />
     <Content Include="Views\CodigoPostais\Index.cshtml" />
+    <Content Include="Views\Utilizadores\Create.cshtml" />
+    <Content Include="Views\Utilizadores\Delete.cshtml" />
+    <Content Include="Views\Utilizadores\Details.cshtml" />
+    <Content Include="Views\Utilizadores\Edit.cshtml" />
+    <Content Include="Views\Utilizadores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

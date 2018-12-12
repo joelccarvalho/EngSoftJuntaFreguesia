@@ -1,31 +1,65 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity
+@model ModelProject.Utilizadores
+@using ModelProject;
+
+@{
+    ViewBag.Title = "Painel de Gestão";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@* Se estiver autenticado e a informação estiver em falta
+    @Html.ActionLink("Detalhes", "Details", "Alunos", new { id = item.Aluno.numeroAluno }, new { })
+*@
+@if (Request.IsAuthenticated)
+{
+    // Se o utilizador atual existe na BD
+    var CurrentUserId = User.Identity.GetUserId();
+    /* SELECT * FROM Utilizadores Where UserID = CurrentUserID
+     * Se não existir cria nova entrada
+     */
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    ProjectDBEntities db = new ProjectDBEntities();
+
+    var user = db.Utilizadores
+                    .Where(u => u.UserID == CurrentUserId)
+                    .FirstOrDefault();
+
+    if (@user == null)
+    {
+        <div class="jumbotron">
+            <h1>Atenção @User.Identity.GetUserName()!</h1>
+            <p class="lead text-danger"> Registo incompleto!</p>
+            @Html.ActionLink("Editar", "Create", "Utilizadores", new { }, new { })
+        </div>
+    }
+    else
+    {
+        @* Ver se o id do utilizador existe na BD,
+            * Tipo admin mostrar lista de utilizadores para aceitar
+            * Tipo !admin mostrar ações
+        *@
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Adicionar ocorrência</h2>
+                <ul>
+                    <li>Pedir esclarecimentos sobre um determinado processo em aberto na Junta de Freguesia</li>
+                    <li>Solicitar o agendamento de reunião com o Presidente da Junta de Freguesia</li>
+                    <li>Reportar problemas na freguesia (exemplo: estradas, jardins, edifícios)</li>
+                    <li>Enviar sugestões</li>
+                </ul>
+                @Html.ActionLink("Adicionar", "Create", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+            </div>
+            <div class="col-md-4">
+                <h2>Informações úteis</h2>
+                <p>Últimas notificações.</p>
+                @* Passar id do utilizador ou id da junta *@
+                @Html.ActionLink("Ver", "Index", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+            </div>
+            <div class="col-md-4">
+                <h2>Web Hosting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                @Html.ActionLink("Adicionar", "Create", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+    }
+}
+

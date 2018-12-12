@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,NumCC,NumEleitor,Morada,IdCodigoPostal,Email,NomeUtilizador,Password,Estado,Tipo")] Utilizadores utilizadores)
+        public ActionResult Create([Bind(Include = "ID,Nome,NumCC,NumEleitor,Morada,IdCodigoPostal,Email,NomeUtilizador,Password,Estado,Tipo,UserID")] Utilizadores utilizadores)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
 
             ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", utilizadores.IdCodigoPostal);
             ViewBag.Tipo = new SelectList(db.TipoUtilizador, "ID", "Tipo", utilizadores.Tipo);
-            return View(utilizadores);
+            return View("/");
         }
 
         // GET: Utilizadores/Edit/5
@@ -85,7 +85,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,NumCC,NumEleitor,Morada,IdCodigoPostal,Email,NomeUtilizador,Password,Estado,Tipo")] Utilizadores utilizadores)
+        public ActionResult Edit([Bind(Include = "ID,Nome,NumCC,NumEleitor,Morada,IdCodigoPostal,Email,NomeUtilizador,Password,Estado,Tipo,UserID")] Utilizadores utilizadores)
         {
             if (ModelState.IsValid)
             {
