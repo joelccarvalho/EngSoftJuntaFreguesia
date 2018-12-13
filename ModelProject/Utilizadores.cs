@@ -31,7 +31,7 @@ namespace ModelProject
         public string NomeUtilizador { get; set; }
         public string Password { get; set; }
         public byte Estado { get; set; }
-        public int Tipo { get; set; }
+        public Nullable<int> Tipo { get; set; }
         public string UserID { get; set; }
     
         public virtual CodigoPostal CodigoPostal { get; set; }

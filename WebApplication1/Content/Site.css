@@ -26,3 +26,17 @@ textarea {
 .jumbotron {
     background-color: #f34d4d;
 }
+
+.button-create-inline {
+    display: inline;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #222222;
+    color: white;
+    text-align: center;
+}

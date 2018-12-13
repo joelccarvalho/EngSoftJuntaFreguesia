@@ -71,10 +71,10 @@
           <Property Name="IdCodigoPostal" Type="int" />
           <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="NomeUtilizador" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Estado" Type="tinyint" Nullable="false" />
-          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="int" />
           <Property Name="UserID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="FKInformacoe356796">
           <End Role="CodigoPostal" Type="Self.CodigoPostal" Multiplicity="0..1" />
@@ -137,7 +137,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FKUtilizador424118">
-          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="1" />
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="0..1" />
           <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TipoUtilizador">
@@ -277,9 +277,9 @@
           <Property Name="IdCodigoPostal" Type="Int32" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NomeUtilizador" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="true" />
           <Property Name="Estado" Type="Byte" Nullable="false" />
-          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CodigoPostal" Relationship="Self.FKUtilizador949029" FromRole="Utilizadores" ToRole="CodigoPostal" />
           <NavigationProperty Name="InformacoesUteis" Relationship="Self.FKInformacoe619905" FromRole="Utilizadores" ToRole="InformacoesUteis" />
           <NavigationProperty Name="Ocorrencias" Relationship="Self.FKOcorrencia933020" FromRole="Utilizadores" ToRole="Ocorrencias" />
@@ -359,7 +359,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FKUtilizador424118">
-          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="1" />
+          <End Role="TipoUtilizador" Type="Self.TipoUtilizador" Multiplicity="0..1" />
           <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TipoUtilizador">
