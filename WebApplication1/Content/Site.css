@@ -40,3 +40,10 @@ textarea {
     color: white;
     text-align: center;
 }
+
+.navbar-brand {
+    background: url(http://www.cm-barcelos.pt/logo.png) no-repeat;
+    margin: 5px;
+    width: 260px;
+    background-size: 160px;
+}
