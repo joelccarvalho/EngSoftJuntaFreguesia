@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<ModelProject.InformacoesUteis>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Informações Úteis";
 }
 
-<h2>Index</h2>
+<center>
+    <a class="btn btn-primary btn-block" href="/InformacoesUteis/Create"><i class="fa fa-plus"></i> ADICIONAR NOVA</a>
+</center>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-striped table-hover">
+    <tr><th colspan="5" class="title-table">Lista de Informações Úteis</th></tr>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Assunto)
@@ -26,26 +26,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Assunto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CodigoPostal.Codigo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Utilizadores.Nome)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+@foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assunto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoPostal.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utilizadores.Nome)
+            </td>
+            <td>
+                <a class="btn btn-primary" href="/InformacoesUteis/Edit/@item.ID"><i class="fa fa-pencil"></i> Editar</a>
+                <a class="btn btn-success" href="/InformacoesUteis/Details/@item.ID"><i class="fa fa-list"></i> Detalhes</a>
+                <a class="btn btn-danger" href="/InformacoesUteis/Delete/@item.ID"><i class="fa fa-trash"></i> Apagar</a>
+            </td>
+        </tr>
+    }
 
 </table>

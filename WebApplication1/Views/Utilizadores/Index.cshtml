@@ -4,10 +4,9 @@
     ViewBag.Title = "Lista de Utilzadores";
 }
 
-<h2>Lista de Utilizadores</h2>
-
-<table class="table table-striped">
-    <tr class="table-success">
+<table class="table table-striped table-hover">
+    <tr><th colspan="6" class="title-table">Lista de Utilizadores</th></tr>
+    <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
@@ -44,9 +43,9 @@
             @Html.DisplayFor(modelItem => item.TipoUtilizador.Tipo)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.ID })
+            <a class="btn btn-primary" href="/Utilizadores/Edit/@item.ID"><i class="fa fa-pencil"></i> Editar</a>
+            <a class="btn btn-success" href="/Utilizadores/Details/@item.ID"><i class="fa fa-list"></i> Detalhes</a>
+            <a class="btn btn-danger" href="/Utilizadores/Delete/@item.ID"><i class="fa fa-trash"></i> Apagar</a>
         </td>
     </tr>
 }

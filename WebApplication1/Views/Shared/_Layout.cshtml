@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Município de Barcelos</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
+<body style="font-family:Corbel">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,7 +26,7 @@
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Utilizadores", "Index", "Utilizadores")</li>
+                    <li>@Html.ActionLink("Utilizadores", "Index", "Utilizadores", new { }, new { @class = "navbar-elements" })</li>
                     @*<li>@Html.ActionLink("Tipo de Utilizadores", "Index", "TipoUtilizadores")</li>*@
                     @*<li>@Html.ActionLink("Tipo de Ocorrências", "Index", "TipoOcorrencias")</li>*@
                     <li>@Html.ActionLink("Códigos Postais", "Index", "CodigoPostais")</li>
@@ -37,9 +39,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+
         <footer class="footer">
-            <p>&copy; @DateTime.Now.Year - Município de Barcelos</p>
+            <p><i class="fa fa-copyright"></i> @DateTime.Now.Year - Município de Barcelos</p>
         </footer>
     </div>
 

@@ -72,13 +72,13 @@
                     <div class="col-md-6">
                         <h2>Lista de Utilizadores</h2>
                         <p>Estado e tipo de utilizadores</p>
-                        @Html.ActionLink("Ver", "Index", "Utilizadores", new { }, new { @class = "btn btn-success" })
+                        <a class="btn btn-primary" href="/Utilizadores"><i class="fa fa-users"></i> Listar</a>
                     </div>
                     <div class="col-md-6">
                         <h2>Informações úteis</h2>
                         <p>Últimas notificações.</p>
                         @* Passar id do utilizador ou id da junta *@
-                        @Html.ActionLink("Ver", "Index", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+                        <a class="btn btn-primary" href="/InformacoesUteis"><i class="fa fa-list"></i> Listar</a>
                     </div>
                 </div>
             }

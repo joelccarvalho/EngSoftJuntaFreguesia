@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<ModelProject.CodigoPostal>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Códigos Postais";
 }
 
-<h2>Index</h2>
+<center>
+    <a class="btn btn-primary btn-block" href="/CodigoPostais/Create"><i class="fa fa-plus"></i> ADICIONAR NOVO</a>
+</center>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-striped table-hover">
+    <tr><th colspan="3" class="title-table">Lista de Códigos Postais</th></tr>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Codigo)
@@ -20,20 +20,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Codigo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Localidade)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+@foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidade)
+            </td>
+            <td>
+                <a class="btn btn-primary" href="/CodigoPostais/Edit/@item.ID"><i class="fa fa-pencil"></i> Editar</a>
+                <a class="btn btn-success" href="/CodigoPostais/Details/@item.ID"><i class="fa fa-list"></i> Detalhes</a>
+                <a class="btn btn-danger" href="/CodigoPostais/Delete/@item.ID"><i class="fa fa-trash"></i> Apagar</a>
+            </td>
+        </tr>
+    }
 
 </table>
