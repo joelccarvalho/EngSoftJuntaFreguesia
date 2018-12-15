@@ -10,6 +10,7 @@ using ModelProject;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class TipoOcorrenciasController : Controller
     {
         private ProjectDBEntities db = new ProjectDBEntities();

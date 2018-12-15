@@ -10,6 +10,8 @@ using ModelProject;
 
 namespace WebApplication1.Controllers
 {
+    // [Authorize(Roles = "Administrador")]
+    [Authorize]
     public class InformacoesUteisController : Controller
     {
         private ProjectDBEntities db = new ProjectDBEntities();

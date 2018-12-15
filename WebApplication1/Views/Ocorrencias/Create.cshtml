@@ -1,4 +1,6 @@
 ﻿@model ModelProject.Ocorrencias
+@using Microsoft.AspNet.Identity
+@using ModelProject;
 
 @{
     ViewBag.Title = "Nova Ocorrência";
@@ -7,52 +9,72 @@
 <h2>Nova Ocorrência</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Ocorrência</h4>
         <hr />
-        @* VERIFICAR QUAL É O UTILIZADOR LOGADO E BUSCAR ESSE ID À BD COM REFERENCIA NO USERID *@
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUtilizador, "IdUtilizador", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdUtilizador", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdUtilizador, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdOcorrencias, "IdOcorrencias", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdOcorrencias", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdOcorrencias, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @if (Request.IsAuthenticated)
+        {
+            // Utilizador logado
+            var CurrentUserId = User.Identity.GetUserId();
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            ProjectDBEntities db = new ProjectDBEntities();
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Anexos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Anexos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anexos, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            // Se o utilizador atual existe na BD
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group hidden">
+                        @Html.LabelFor(model => model.IdUtilizador, "IdUtilizador", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.IdUtilizador, new { htmlAttributes = new { @class = "form-control", @Value = user.ID } })
+                            @Html.ValidationMessageFor(model => model.IdUtilizador, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IdOcorrencias, "IdOcorrencias", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("IdOcorrencias", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IdOcorrencias, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Anexos, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Anexos, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Anexos, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            }
+         }
     </div>
 }
 

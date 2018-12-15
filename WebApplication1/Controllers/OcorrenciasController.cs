@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using ModelProject;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class OcorrenciasController : Controller
     {
         private ProjectDBEntities db = new ProjectDBEntities();
@@ -39,7 +41,38 @@ namespace WebApplication1.Controllers
         // GET: Ocorrencias/Create
         public ActionResult Create()
         {
-            ViewBag.IdOcorrencias = new SelectList(db.TipoOcorrencias, "ID", "Designacao");
+            // Utilizador logado
+            var CurrentUserId = User.Identity.GetUserId();
+            // Tipo de utilizador
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() == 1)
+            {
+                foreach (var user in userCurrent)
+                {
+                    // Esclarecimentos e problemas gerais restritos aos fregueses
+                    var roles = from r in db.TipoOcorrencias
+                                where r.PermissoesUtilizador == null || r.PermissoesUtilizador == user.Tipo
+                                select r;
+
+                    if (roles.Count() > 0)
+                    {
+                        ViewBag.IdOcorrencias = new SelectList(roles, "ID", "Designacao");
+                    }
+                    else
+                    {
+                        ViewBag.IdOcorrencias = new SelectList(db.TipoOcorrencias, "ID", "Designacao");
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.IdOcorrencias = new SelectList(db.TipoOcorrencias, "ID", "Designacao");
+            }
+
             ViewBag.IdUtilizador = new SelectList(db.Utilizadores, "ID", "Nome");
             return View();
         }

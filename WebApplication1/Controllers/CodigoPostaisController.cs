@@ -10,6 +10,7 @@ using ModelProject;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class CodigoPostaisController : Controller
     {
         private ProjectDBEntities db = new ProjectDBEntities();
