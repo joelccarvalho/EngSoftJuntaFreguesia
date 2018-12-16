@@ -24,8 +24,17 @@ textarea {
     max-width: 280px;
 }
 
+/* Aviso Main*/
 .jumbotron {
-    background-color: #f34d4d;
+    background-color: #c7dce2;
+}
+
+.jumbotron h1 {
+    color: #166d89;
+}
+
+.jumbotron p {
+    color: red;
 }
 
 .button-create-inline {

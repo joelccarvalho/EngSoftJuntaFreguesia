@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using ModelProject;
 
 namespace WebApplication1.Controllers
 {
-    // [Authorize(Roles = "Administrador")]
     [Authorize]
     public class InformacoesUteisController : Controller
     {
@@ -19,31 +19,49 @@ namespace WebApplication1.Controllers
         // GET: InformacoesUteis
         public ActionResult Index()
         {
-            var informacoesUteis = db.InformacoesUteis.Include(i => i.CodigoPostal).Include(i => i.Utilizadores);
-            return View(informacoesUteis.ToList());
+            var status = CheckIsValid();
+
+            if (status != 2)
+            {
+                var informacoesUteis = db.InformacoesUteis.Include(i => i.CodigoPostal).Include(i => i.Utilizadores);
+                return View(informacoesUteis.ToList());
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: InformacoesUteis/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
+                if (informacoesUteis == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(informacoesUteis);
             }
-            InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
-            if (informacoesUteis == null)
-            {
-                return HttpNotFound();
-            }
-            return View(informacoesUteis);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: InformacoesUteis/Create
         public ActionResult Create()
         {
-            ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo");
-            ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome");
-            return View();
+            var status = CheckIsValid();
+
+            if (status == 1)
+            {
+                ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo");
+                ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome");
+                return View();
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: InformacoesUteis/Create
@@ -53,33 +71,45 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Assunto,Descricao,Destinatario,IdCodigoPostal")] InformacoesUteis informacoesUteis)
         {
-            if (ModelState.IsValid)
-            {
-                db.InformacoesUteis.Add(informacoesUteis);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var status = CheckIsValid();
 
-            ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
-            ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
-            return View(informacoesUteis);
+            if (status == 1)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.InformacoesUteis.Add(informacoesUteis);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
+                ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
+                return View(informacoesUteis);
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: InformacoesUteis/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
+                if (informacoesUteis == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
+                ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
+                return View(informacoesUteis);
             }
-            InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
-            if (informacoesUteis == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
-            ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
-            return View(informacoesUteis);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: InformacoesUteis/Edit/5
@@ -89,30 +119,42 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Assunto,Descricao,Destinatario,IdCodigoPostal")] InformacoesUteis informacoesUteis)
         {
-            if (ModelState.IsValid)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                db.Entry(informacoesUteis).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(informacoesUteis).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
+                ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
+                return View(informacoesUteis);
             }
-            ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", informacoesUteis.IdCodigoPostal);
-            ViewBag.Destinatario = new SelectList(db.Utilizadores, "ID", "Nome", informacoesUteis.Destinatario);
-            return View(informacoesUteis);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: InformacoesUteis/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
+                if (informacoesUteis == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(informacoesUteis);
             }
-            InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
-            if (informacoesUteis == null)
-            {
-                return HttpNotFound();
-            }
-            return View(informacoesUteis);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: InformacoesUteis/Delete/5
@@ -120,10 +162,16 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
-            db.InformacoesUteis.Remove(informacoesUteis);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var status = CheckIsValid();
+
+            if (status == 1)
+            {
+                InformacoesUteis informacoesUteis = db.InformacoesUteis.Find(id);
+                db.InformacoesUteis.Remove(informacoesUteis);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         protected override void Dispose(bool disposing)
@@ -133,6 +181,39 @@ namespace WebApplication1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /* Verificar tipo e estado do utilizador
+        * 0 - Sem permissões
+        * 1 - Permitido
+        * 2 - Permitido registar-se
+        */
+        public int CheckIsValid()
+        {
+            var CurrentUserId = User.Identity.GetUserId();
+
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    // Se o email não foi verificado ou for diferente de administrador
+                    if (user.Estado == 0 || user.TipoUtilizador.Tipo != "Administrador")
+                    {
+                        return 0;
+                    }
+                }
+
+            }
+            else // Falta 2º registo
+            {
+                return 2;
+            }
+            return 1;
         }
     }
 }

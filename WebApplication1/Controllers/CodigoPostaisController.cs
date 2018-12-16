@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using ModelProject;
 
 namespace WebApplication1.Controllers
@@ -18,28 +19,46 @@ namespace WebApplication1.Controllers
         // GET: CodigoPostais
         public ActionResult Index()
         {
-            return View(db.CodigoPostal.ToList());
+            var status = CheckIsValid();
+
+            if (status == 1)
+            {
+                return View(db.CodigoPostal.ToList());
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: CodigoPostais/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
+                if (codigoPostal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(codigoPostal);
             }
-            CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
-            if (codigoPostal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(codigoPostal);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: CodigoPostais/Create
         public ActionResult Create()
         {
-            return View();
+            var status = CheckIsValid();
+
+            if (status == 2)
+            {
+                return View();
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: CodigoPostais/Create
@@ -49,29 +68,41 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Codigo,Localidade")] CodigoPostal codigoPostal)
         {
-            if (ModelState.IsValid)
-            {
-                db.CodigoPostal.Add(codigoPostal);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var status = CheckIsValid();
 
-            return View(codigoPostal);
+            if (status == 2)
+            {
+                if (ModelState.IsValid)
+                {
+                    db.CodigoPostal.Add(codigoPostal);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(codigoPostal);
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: CodigoPostais/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
+                if (codigoPostal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(codigoPostal);
             }
-            CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
-            if (codigoPostal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(codigoPostal);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: CodigoPostais/Edit/5
@@ -81,28 +112,40 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Codigo,Localidade")] CodigoPostal codigoPostal)
         {
-            if (ModelState.IsValid)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                db.Entry(codigoPostal).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(codigoPostal).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(codigoPostal);
             }
-            return View(codigoPostal);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // GET: CodigoPostais/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            var status = CheckIsValid();
+
+            if (status == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
+                if (codigoPostal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(codigoPostal);
             }
-            CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
-            if (codigoPostal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(codigoPostal);
+            return View("~/Views/Home/Index.cshtml");
         }
 
         // POST: CodigoPostais/Delete/5
@@ -110,10 +153,16 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
-            db.CodigoPostal.Remove(codigoPostal);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var status = CheckIsValid();
+
+            if (status == 1)
+            {
+                CodigoPostal codigoPostal = db.CodigoPostal.Find(id);
+                db.CodigoPostal.Remove(codigoPostal);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("~/Views/Home/Index.cshtml");
         }
 
         protected override void Dispose(bool disposing)
@@ -123,6 +172,39 @@ namespace WebApplication1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /* Verificar tipo e estado do utilizador
+        * 0 - Sem permissões
+        * 1 - Permitido
+        * 2 - Permitido registar-se
+        */
+        public int CheckIsValid()
+        {
+            var CurrentUserId = User.Identity.GetUserId();
+
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    // Se o email não foi verificado ou for diferente de administrador
+                    if (user.Estado == 0 || user.TipoUtilizador.Tipo != "Administrador")
+                    {
+                        return 0;
+                    }
+                }
+
+            }
+            else // Falta 2º registo
+            {
+                return 2;
+            }
+            return 1;
         }
     }
 }

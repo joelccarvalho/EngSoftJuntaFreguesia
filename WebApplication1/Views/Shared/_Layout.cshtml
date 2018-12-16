@@ -23,15 +23,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Utilizadores", "Index", "Utilizadores", new { }, new { @class = "navbar-elements" })</li>
-                    @*<li>@Html.ActionLink("Tipo de Utilizadores", "Index", "TipoUtilizadores")</li>*@
-                    @*<li>@Html.ActionLink("Tipo de Ocorrências", "Index", "TipoOcorrencias")</li>*@
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Tipo de Utilizadores", "Index", "TipoUtilizadores")</li>
+                    <li>@Html.ActionLink("Tipo de Ocorrências", "Index", "TipoOcorrencias")</li>*@
+                    <li>@Html.ActionLink("Utilizadores", "Index", "Utilizadores")</li>
                     <li>@Html.ActionLink("Códigos Postais", "Index", "CodigoPostais")</li>
                     <li>@Html.ActionLink("Informações Úteis", "Index", "InformacoesUteis")</li>
                     <li>@Html.ActionLink("Ocorrências", "Index", "Ocorrencias")</li>
+                    <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
