@@ -14,7 +14,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Ocorrência</h4>
+        @*<h4>Ocorrência</h4>*@
         <hr />
 
         @if (Request.IsAuthenticated)
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.IdOcorrencias, "IdOcorrencias", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.IdOcorrencias, "Ocorrencias", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.DropDownList("IdOcorrencias", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IdOcorrencias, "", new { @class = "text-danger" })
@@ -69,7 +69,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Guardar" class="btn btn-primary" />
                         </div>
                     </div>
                 }
@@ -78,9 +78,10 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @*@Html.ActionLink("Voltar", "Index")*@
+        @Html.ActionLink(" Voltar à lista", "Index", null, new { @class = "fa fa-list btn btn-success" })
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

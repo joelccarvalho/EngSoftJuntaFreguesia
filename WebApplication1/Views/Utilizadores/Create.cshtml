@@ -16,7 +16,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.IdCodigoPostal, "IdCodigoPostal", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.IdCodigoPostal, "Codigo Postal", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("IdCodigoPostal", null, htmlAttributes: new { @class = "form-control button-create-inline" })
             @Html.ValidationMessageFor(model => model.IdCodigoPostal, "", new { @class = "text-danger" })
@@ -83,14 +83,15 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Guardar" class="btn btn-primary" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Voltar", "Index")
+    @*@Html.ActionLink("Voltar", "Index")*@
+    @Html.ActionLink(" Voltar", "Index", null, new { @class = "fa fa-angle-left btn btn-default" })
 </div>
 
 @section Scripts {

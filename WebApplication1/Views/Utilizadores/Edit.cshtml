@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-group fix-margin">
-            @Html.LabelFor(model => model.IdCodigoPostal, "IdCodigoPostal", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
+            @Html.LabelFor(model => model.IdCodigoPostal, "Codigo Postal", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
             <div class="col-md-10">
                 @Html.DropDownList("IdCodigoPostal", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdCodigoPostal, "", new { @class = "text-danger" })
