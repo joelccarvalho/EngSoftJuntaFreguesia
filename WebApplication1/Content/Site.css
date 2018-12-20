@@ -91,6 +91,11 @@ textarea {
     color: #166d89;
 }
 
+.subtitle-page {
+    font-weight: bold;
+    color: #333;
+}
+
 /* Edit pages */
 .table-edit-data {
     border: 1px solid #166d89;
