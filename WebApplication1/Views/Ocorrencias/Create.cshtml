@@ -6,7 +6,7 @@
     ViewBag.Title = "Nova Ocorrência";
 }
 
-<h2>Nova Ocorrência</h2>
+<h2 class="title-page">Nova Ocorrência</h2>
 
 
 @using (Html.BeginForm())
@@ -14,7 +14,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @*<h4>Ocorrência</h4>*@
         <hr />
 
         @if (Request.IsAuthenticated)
@@ -44,7 +43,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.IdOcorrencias, "Ocorrencias", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.IdOcorrencias, "Ocorrencias", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
                         <div class="col-md-10">
                             @Html.DropDownList("IdOcorrencias", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IdOcorrencias, "", new { @class = "text-danger" })
@@ -52,7 +51,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(model => model.Descricao, htmlAttributes: new { @class = "form-control" } )
                             @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
@@ -60,7 +59,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Anexos, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Anexos, htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Anexos, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Anexos, "", new { @class = "text-danger" })
@@ -69,7 +68,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Guardar" class="btn btn-primary" />
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-check"> Guardar</i></button>
+                            <a class="btn btn-success" href="/Ocorrencias"><i class="fa fa-list"></i> Voltar</a>
                         </div>
                     </div>
                 }
@@ -78,10 +78,6 @@
     </div>
 }
 
-    <div>
-        @*@Html.ActionLink("Voltar", "Index")*@
-        @Html.ActionLink(" Voltar à lista", "Index", null, new { @class = "fa fa-list btn btn-success" })
-    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

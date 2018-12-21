@@ -4,42 +4,41 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Apagar</h2>
+<h2 class="title-page">Apagar</h2>
 
-<h3>Tem certeza que pretende apagar?</h3>
+<h3 class="subtitle-page">Tem certeza que pretende apagar?</h3>
 <div>
-    @*<h4>InformacoesUteis</h4>*@
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="table-edit-data">
             @Html.DisplayNameFor(model => model.Assunto)
         </dt>
 
-        <dd>
+        <dd class="form-control-static">
             @Html.DisplayFor(model => model.Assunto)
         </dd>
 
-        <dt>
+        <dt class="table-edit-data">
             @Html.DisplayNameFor(model => model.Descricao)
         </dt>
 
-        <dd>
+        <dd class="form-control-static">
             @Html.DisplayFor(model => model.Descricao)
         </dd>
 
-        <dt>
+        <dt class="table-edit-data">
             @Html.DisplayNameFor(model => model.CodigoPostal.Codigo)
         </dt>
 
-        <dd>
+        <dd class="form-control-static">
             @Html.DisplayFor(model => model.CodigoPostal.Codigo)
         </dd>
 
-        <dt>
+        <dt class="table-edit-data">
             @Html.DisplayNameFor(model => model.Utilizadores.Nome)
         </dt>
 
-        <dd>
+        <dd class="form-control-static">
             @Html.DisplayFor(model => model.Utilizadores.Nome)
         </dd>
 
@@ -49,10 +48,8 @@
         @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        @*<input type="submit" value="Apagar" class="btn btn-danger" />*@
-        @*@Html.ActionLink("Voltar", "Index")*@
         <button class="btn btn-danger" type="submit"><i class="fa fa-trash"> Apagar</i></button>
-        @Html.ActionLink(" Voltar à lista", "Index", null, new { @class = "fa fa-list btn btn-success" })
+        <a class="btn btn-success" href="/InformacoesUteis"><i class="fa fa-list"></i> Voltar à lista</a>
     </div>
     }
 </div>

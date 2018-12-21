@@ -54,7 +54,7 @@ namespace WebApplication1.Controllers
         {
             var status = CheckIsValid();
 
-            if (status == 2)
+            if (status == 2 || status == 1)
             {
                 return View();
             }
@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
         {
             var status = CheckIsValid();
 
-            if (status == 2)
+            if (status == 2 || status == 1)
             {
                 if (ModelState.IsValid)
                 {
@@ -196,6 +196,10 @@ namespace WebApplication1.Controllers
                     if (user.Estado == 0 || user.TipoUtilizador.Tipo != "Administrador")
                     {
                         return 0;
+                    }
+                    else if(user.Estado == 1 || user.TipoUtilizador.Tipo == "Administrador")
+                    {
+                        return 1;
                     }
                 }
 

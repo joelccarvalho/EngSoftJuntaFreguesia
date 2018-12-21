@@ -4,33 +4,21 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Detalhes</h2>
+<h2 class="title-page">Detalhes</h2>
 
-<div>
-    @*<h4>Codigo Postal</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Codigo)
-        </dt>
+<table class="table table-striped table-hover">
+    <tr><th colspan="2" class="title-table">@Html.DisplayFor(model => model.Localidade)</th></tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Codigo)</th>
+        <th>@Html.DisplayNameFor(model => model.Localidade)</th>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Codigo)</td>
+        <td>@Html.DisplayFor(model => model.Localidade)</td>
+    </tr>
+</table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Codigo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Localidade)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Localidade)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @*@Html.ActionLink("Alterar", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Voltar", "Index")*@
-    @Html.ActionLink(" Editar", "Edit", new { id = Model.ID }, new { @class = "fa fa-pencil btn btn-primary" })
-    @Html.ActionLink(" Voltar à lista", "Index", null, new { @class = "fa fa-list btn btn-success" })
+    <a class="btn btn-primary" href="/CodigoPostais/Edit/@Model.ID"><i class="fa fa-pencil"></i> Editar</a>
+    <a class="btn btn-success" href="/CodigoPostais"><i class="fa fa-list"></i> Voltar à lista</a>
 </p>

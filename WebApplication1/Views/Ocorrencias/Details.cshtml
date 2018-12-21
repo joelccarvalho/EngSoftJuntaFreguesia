@@ -4,49 +4,25 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Detalhes</h2>
+<h2 class="title-page">Detalhes</h2>
 
-<div>
-    @*<h4>Ocorrencias</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
+<table class="table table-striped table-hover">
+    <tr><th colspan="4" class="title-table">@Html.DisplayFor(model => model.TipoOcorrencias.Designacao)</th></tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Descricao)</th>
+        <th>@Html.DisplayNameFor(model => model.Anexos)</th>
+        <th>@Html.DisplayNameFor(model => model.TipoOcorrencias.Designacao)</th>
+        <th>@Html.DisplayNameFor(model => model.Utilizadores.Nome)</th>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Descricao)</td>
+        <td>@Html.DisplayFor(model => model.Anexos)</td>
+        <td>@Html.DisplayFor(model => model.TipoOcorrencias.Designacao)</td>
+        <td>@Html.DisplayFor(model => model.Utilizadores.Nome)</td>
+    </tr>
+</table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Anexos)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Anexos)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoOcorrencias.Designacao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoOcorrencias.Designacao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Utilizadores.Nome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Utilizadores.Nome)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @*@Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Voltar", "Index")*@
-    @Html.ActionLink(" Editar", "Edit", null, new { id = Model.ID }, new { @class = "fa fa-pencil btn btn-primary" })
-    @Html.ActionLink(" Voltar à lista", "Index", null, new { @class = "fa fa-list btn btn-success" })
+    <a class="btn btn-primary" href="/Ocorrencias/Edit/@Model.ID"><i class="fa fa-pencil"></i> Editar</a>
+    <a class="btn btn-success" href="/Ocorrencias"><i class="fa fa-list"></i> Voltar à lista</a>
 </p>
