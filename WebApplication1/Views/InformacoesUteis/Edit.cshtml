@@ -33,6 +33,24 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2 table-edit-data">Enviar para:</label>
+            <div class="col-md-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="userRadio" value="user" checked>
+                    <label class="form-check-label" for="userRadio">
+                        Utilizador
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="userPostalCode" value="postalcode">
+                    <label class="form-check-label" for="userPostalCode">
+                        Código-Postal
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group form-group-checkbox-user">
             @Html.LabelFor(model => model.Destinatario, "Destinatario", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
             <div class="col-md-10">
                 @Html.DropDownList("Destinatario", null, htmlAttributes: new { @class = "form-control" })
@@ -40,13 +58,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdCodigoPostal, "IdCodigoPostal", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
+        <div class="form-group form-group-checkbox-postalCode" style="display:none">
+            @Html.LabelFor(model => model.IdCodigoPostal, "Codigo Postal", htmlAttributes: new { @class = "control-label col-md-2 table-edit-data" })
             <div class="col-md-10">
-                @Html.DropDownList("IdCodigoPostal", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdCodigoPostal", null, htmlAttributes: new { @class = "form-control", })
                 @Html.ValidationMessageFor(model => model.IdCodigoPostal, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
