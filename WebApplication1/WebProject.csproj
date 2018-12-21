@@ -201,8 +201,6 @@
     <Compile Include="Controllers\InformacoesUteisController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OcorrenciasController.cs" />
-    <Compile Include="Controllers\TipoOcorrenciasController.cs" />
-    <Compile Include="Controllers\TipoUtilizadoresController.cs" />
     <Compile Include="Controllers\UtilizadoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -282,21 +280,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\TipoOcorrencias\Create.cshtml" />
-    <Content Include="Views\TipoOcorrencias\Delete.cshtml" />
-    <Content Include="Views\TipoOcorrencias\Details.cshtml" />
-    <Content Include="Views\TipoOcorrencias\Edit.cshtml" />
-    <Content Include="Views\TipoOcorrencias\Index.cshtml" />
     <Content Include="Views\InformacoesUteis\Create.cshtml" />
     <Content Include="Views\InformacoesUteis\Delete.cshtml" />
     <Content Include="Views\InformacoesUteis\Details.cshtml" />
     <Content Include="Views\InformacoesUteis\Edit.cshtml" />
     <Content Include="Views\InformacoesUteis\Index.cshtml" />
-    <Content Include="Views\TipoUtilizadores\Create.cshtml" />
-    <Content Include="Views\TipoUtilizadores\Delete.cshtml" />
-    <Content Include="Views\TipoUtilizadores\Details.cshtml" />
-    <Content Include="Views\TipoUtilizadores\Edit.cshtml" />
-    <Content Include="Views\TipoUtilizadores\Index.cshtml" />
     <Content Include="Views\Ocorrencias\Create.cshtml" />
     <Content Include="Views\Ocorrencias\Delete.cshtml" />
     <Content Include="Views\Ocorrencias\Details.cshtml" />
