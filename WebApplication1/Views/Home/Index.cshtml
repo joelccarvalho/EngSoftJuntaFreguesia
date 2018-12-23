@@ -6,9 +6,6 @@
     ViewBag.Title = "Painel de Gestão";
 }
 
-@* Se estiver autenticado e a informação estiver em falta
-    @Html.ActionLink("Detalhes", "Details", "Alunos", new { id = item.Aluno.numeroAluno }, new { })
-*@
 @if (Request.IsAuthenticated)
 {
     // Utilizador logado

@@ -23,8 +23,29 @@ namespace WebApplication1.Controllers
 
             if (status != 2)
             {
-                var informacoesUteis = db.InformacoesUteis.Include(i => i.CodigoPostal).Include(i => i.Utilizadores);
-                return View(informacoesUteis.ToList());
+                var type = CheckUserType();
+
+                // Admin ou membro da junta vê todas as informações
+                if(type == "admin" || type == "mj")
+                {
+                    var informacoesUteis = db.InformacoesUteis.Include(i => i.CodigoPostal).Include(i => i.Utilizadores);
+                    return View(informacoesUteis.ToList());
+                }
+                else // Senão só vê as informações enviadas para ele ou para a sua freguesia
+                {
+                    string CurrentId = User.Identity.GetUserId();
+
+                    // Código Postal
+                    var userCurrent = from u in db.Utilizadores
+                                      where u.UserID == CurrentId
+                                      select u;
+ 
+                    foreach (var user in userCurrent)
+                    {
+                        var informacoesUteis = db.InformacoesUteis.Include(i => i.CodigoPostal).Include(i => i.Utilizadores).Where(s => s.Utilizadores.UserID == CurrentId || s.CodigoPostal.ID == user.IdCodigoPostal);
+                        return View(informacoesUteis.ToList());
+                    }
+                }
             }
             return View("~/Views/Home/Index.cshtml");
         }
@@ -214,6 +235,50 @@ namespace WebApplication1.Controllers
                 return 2;
             }
             return 1;
+        }
+
+        /*
+         * Verificar tipo de utilizador logado
+         */
+        public string CheckUserType()
+        {
+            var type = "";
+
+            var CurrentUserId = User.Identity.GetUserId();
+
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    switch (user.TipoUtilizador.Tipo)
+                    {
+                        case "Administrador":
+                            type = "admin";
+                            break;
+
+                        case "Freguês":
+                            type = "fregues";
+                            break;
+
+                        case "Pessoa não residente":
+                            type = "pnr";
+                            break;
+
+                        case "Membro da Junta":
+                            type = "mj";
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+            return type;
         }
     }
 }

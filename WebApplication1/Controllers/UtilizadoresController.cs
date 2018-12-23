@@ -102,8 +102,9 @@ namespace WebApplication1.Controllers
         public ActionResult Edit(int? id)
         {
             var status = CheckIsValid();
+            var itsMe  = CheckId(id);
 
-            if (status == 1)
+            if (status == 1 || itsMe)
             {
                 if (id == null)
                 {
@@ -128,10 +129,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Nome,NumCC,NumEleitor,Morada,IdCodigoPostal,Email,NomeUtilizador,Password,Estado,Tipo,UserID")] Utilizadores utilizadores)
         {
-            var status = CheckIsValid();
-
-            if (status == 1)
-            {
+           
                 if (ModelState.IsValid)
                 {
                     db.Entry(utilizadores).State = System.Data.Entity.EntityState.Modified;
@@ -141,8 +139,7 @@ namespace WebApplication1.Controllers
                 ViewBag.IdCodigoPostal = new SelectList(db.CodigoPostal, "ID", "Codigo", utilizadores.IdCodigoPostal);
                 ViewBag.Tipo = new SelectList(db.TipoUtilizador, "ID", "Tipo", utilizadores.Tipo);
                 return View(utilizadores);
-            }
-            return View("~/Views/Home/Index.cshtml");
+
         }
 
         // GET: Utilizadores/Delete/5
@@ -224,5 +221,29 @@ namespace WebApplication1.Controllers
             }
             return 1;
         }
+
+        public bool CheckId(int? id)
+        {
+            var CurrentUserId = User.Identity.GetUserId();
+
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    // Se o id é do utilizador logado
+                    if (id == user.ID)
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+        } 
     }
 }
