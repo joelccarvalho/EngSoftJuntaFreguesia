@@ -23,8 +23,21 @@ namespace WebApplication1.Controllers
 
             if (status == 1)
             {
-                var ocorrencias = db.Ocorrencias.Include(o => o.TipoOcorrencias).Include(o => o.Utilizadores);
-                return View(ocorrencias.ToList());
+                var type = CheckUserType();
+
+                // Admin ou membro da junta vê todas as ocorrências
+                if(type == "admin" || type == "mj")
+                {
+                    var ocorrencias = db.Ocorrencias.Include(o => o.TipoOcorrencias).Include(o => o.Utilizadores);
+                    return View(ocorrencias.ToList());
+
+                }
+                else // Senão só vê as ocorrências dele mesmo
+                {
+                    string CurrentId = User.Identity.GetUserId();
+                    var ocorrencias = db.Ocorrencias.Include(o => o.TipoOcorrencias).Include(o => o.Utilizadores).Where(s => s.Utilizadores.UserID == CurrentId);
+                    return View(ocorrencias.ToList());
+                }
             }
             return View("~/Views/Home/Index.cshtml");
         }
@@ -245,6 +258,50 @@ namespace WebApplication1.Controllers
                 return 2;
             }
             return 1;
+        }
+
+        /*
+         * Verificar tipo de utilizador logado
+         */
+        public string CheckUserType()
+        {
+            var type = "";
+
+            var CurrentUserId = User.Identity.GetUserId();
+
+            var userCurrent = from u in db.Utilizadores
+                              where u.UserID == CurrentUserId
+                              select u;
+
+            // Utilizador encontrado
+            if (userCurrent.Count() != 0)
+            {
+                foreach (var user in userCurrent)
+                {
+                    switch (user.TipoUtilizador.Tipo)
+                    {
+                        case "Administrador":
+                            type = "admin";
+                            break;
+
+                        case "Freguês":
+                            type = "fregues";
+                            break;
+
+                        case "Pessoa não residente":
+                            type = "pnr";
+                            break;
+
+                        case "Membro da Junta":
+                            type = "mj";
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+            return type;
         }
     }
 }
