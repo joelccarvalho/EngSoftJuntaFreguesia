@@ -110,3 +110,17 @@ textarea {
     margin-left: 0px !important;
 }
 
+/* Button search */
+.btn-search {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 6px 12px;
+}
+
+.my-btn {
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+

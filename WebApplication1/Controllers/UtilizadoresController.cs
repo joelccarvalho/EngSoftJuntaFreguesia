@@ -17,14 +17,23 @@ namespace WebApplication1.Controllers
         private ProjectDBEntities db = new ProjectDBEntities();
 
         // GET: Utilizadores
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var status = CheckIsValid();
 
-            if(status == 1)
+            if (status == 1)
             {
-                var utilizadores = db.Utilizadores.Include(u => u.CodigoPostal).Include(u => u.TipoUtilizador);
-                return View(utilizadores.ToList());
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    var utilizadores = db.Utilizadores.Where(s => s.Nome.Contains(searchString));
+                    return View(utilizadores.ToList());
+                }
+                else
+                {
+                    var utilizadores = db.Utilizadores.Include(u => u.CodigoPostal).Include(u => u.TipoUtilizador);
+                    return View(utilizadores.ToList());
+                }
+
             }
             return View("~/Views/Home/Index.cshtml");
         }

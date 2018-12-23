@@ -26,27 +26,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model)
+    @if (Model.Count() > 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anexos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoOcorrencias.Designacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizadores.Nome)
-            </td>
-            <td>
-                <a class="btn btn-primary" href="/Ocorrencias/Edit/@item.ID"><i class="fa fa-pencil"></i> Editar</a>
-                <a class="btn btn-success" href="/Ocorrencias/Details/@item.ID"><i class="fa fa-list"></i> Detalhes</a>
-                <a class="btn btn-danger" href="/Ocorrencias/Delete/@item.ID"><i class="fa fa-trash"></i> Apagar</a>
-            </td>
-        </tr>
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Anexos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoOcorrencias.Designacao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Utilizadores.Nome)
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/Ocorrencias/Edit/@item.ID"><i class="fa fa-pencil"></i> Editar</a>
+                    <a class="btn btn-success" href="/Ocorrencias/Details/@item.ID"><i class="fa fa-list"></i> Detalhes</a>
+                    <a class="btn btn-danger" href="/Ocorrencias/Delete/@item.ID"><i class="fa fa-trash"></i> Apagar</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="5" class="title-table">Sem dados!</td></tr>
     }
 
 </table>
