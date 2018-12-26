@@ -13,6 +13,7 @@ namespace ModelProject
     {
         public int ID { get; set; }
         [Display(Name = "Nº Código Postal")]
+        [StringLength(8)] // Máximo 8 caracteres xxxx-xxx
         public string Codigo { get; set; }
         [Display(Name = "Nome da Localidade")]
         public string Localidade { get; set; }
@@ -65,18 +66,23 @@ namespace ModelProject
     {
         public int ID { get; set; }
         [Display(Name = "Nome Completo")]
+        [Required]
         public string Nome { get; set; }
-        [Display(Name = "Nº CC")]
+        [Display(Name = "Nº Identificação")]
+        [Required]
         public int NumCC { get; set; }
         [Display(Name = "Nº Eleitor")]
         public Nullable<int> NumEleitor { get; set; }
+        [Required]
         public string Morada { get; set; }
         [Display(Name = "Código Postal")]
+        [Required]
         public Nullable<int> IdCodigoPostal { get; set; }
         public string Email { get; set; }
         [Display(Name = "Nome de Utilizador")]
         public string NomeUtilizador { get; set; }
         public string Password { get; set; }
+        [Range(0, 1)] // Entre 0 e 1
         public byte Estado { get; set; }
         [Display(Name = "Tipo de Utilizador")]
         public Nullable<int> Tipo { get; set; }

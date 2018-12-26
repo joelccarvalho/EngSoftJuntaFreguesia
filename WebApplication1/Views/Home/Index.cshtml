@@ -46,11 +46,12 @@
                     <h1 class="title-page">Tipo: @user.TipoUtilizador.Tipo</h1>
                     <hr class="bar-div" />
                     <div class="col-md-6 div-home-page">
-                        <h2>Adicionar ocorrência</h2>
+                        <h2 class="subtitle-page">Adicionar ocorrência</h2>
+                        <p>Nova ocorrência</p>
                         <a class="btn btn-primary btn-home-page" href="/Ocorrencias/Create"><i class="fa fa-plus"></i> Adicionar</a>
                     </div>
                     <div class="col-md-6">
-                        <h2>Informações úteis</h2>
+                        <h2  class="subtitle-page">Informações úteis</h2>
                         <p>Últimas notificações.</p>
                         @* Passar id do utilizador ou id da junta *@
                         <a class="btn btn-primary btn-home-page" href="/Ocorrencias"><i class="fa fa-list"></i> Listar</a>
@@ -59,17 +60,30 @@
             }
             else // Tipo admin mostrar lista de utilizadores para aceitar
             {
+                <!-- Nº de utilizadores por validar -->
+                var totalUsers = from u in db.Utilizadores
+                                  where u.Estado == 0
+                                  select u;
+
                 <div class="row">
                     <h1 class="title-page">Administrador</h1>
                     <hr class="bar-div" />
                     <div class="col-md-6 div-home-page">
                         <h2 class="subtitle-page">Lista de Utilizadores</h2>
                         <p>Estado e tipo de utilizadores</p>
-                        <a class="btn btn-primary btn-home-page" href="/Utilizadores"><i class="fa fa-users"></i> Listar</a>
+                        @* Notificar se falta ativar utilizadores *@
+                        @if (totalUsers.Count() > 0)
+                        {
+                            <a class="btn btn-primary btn-home-page" href="/Utilizadores"><i class="fa fa-users"></i> Listar <span class="badge badge-danger">@totalUsers.Count()</span></a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary btn-home-page" href="/Utilizadores"><i class="fa fa-users"></i> Listar</a>
+                        }
                     </div>
                     <div class="col-md-6">
                         <h2 class="subtitle-page">Informações úteis</h2>
-                        <p>Últimas notificações.</p>
+                        <p>Últimas notificações</p>
                         @* Passar id do utilizador ou id da junta *@
                         <a class="btn btn-primary btn-home-page" href="/InformacoesUteis"><i class="fa fa-list"></i> Listar</a>
                     </div>
