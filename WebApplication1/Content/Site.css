@@ -124,3 +124,23 @@ textarea {
     border-top-left-radius: 0px !important;
 }
 
+/*Home page*/
+.bar-div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 5px solid #eee;
+    border-radius: 5px;
+}
+
+.btn-home-page {
+    padding: 100px;
+    border-radius: 145px;
+    font-size: 30px;
+}
+
+.div-home-page {
+    border-right: 5px solid #eee;
+    border-radius: 5px;
+}
+

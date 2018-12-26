@@ -43,39 +43,35 @@
             if (@user.TipoUtilizador.Tipo != "Administrador")
             {
                 <div class="row">
-                    <h1>Tipo: @user.TipoUtilizador.Tipo</h1>
-                    <div class="col-md-6">
+                    <h1 class="title-page">Tipo: @user.TipoUtilizador.Tipo</h1>
+                    <hr class="bar-div" />
+                    <div class="col-md-6 div-home-page">
                         <h2>Adicionar ocorrência</h2>
-                        <ul>
-                            <li>Pedir esclarecimentos sobre um determinado processo em aberto na Junta de Freguesia</li>
-                            <li>Solicitar o agendamento de reunião com o Presidente da Junta de Freguesia</li>
-                            <li>Reportar problemas na freguesia (exemplo: estradas, jardins, edifícios)</li>
-                            <li>Enviar sugestões</li>
-                        </ul>
-                        @Html.ActionLink("Adicionar", "Create", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+                        <a class="btn btn-primary btn-home-page" href="/Ocorrencias/Create"><i class="fa fa-plus"></i> Adicionar</a>
                     </div>
                     <div class="col-md-6">
                         <h2>Informações úteis</h2>
                         <p>Últimas notificações.</p>
                         @* Passar id do utilizador ou id da junta *@
-                        @Html.ActionLink("Ver", "Index", "Ocorrencias", new { }, new { @class = "btn btn-success" })
+                        <a class="btn btn-primary btn-home-page" href="/Ocorrencias"><i class="fa fa-list"></i> Listar</a>
                     </div>
                 </div>
             }
             else // Tipo admin mostrar lista de utilizadores para aceitar
             {
                 <div class="row">
-                    <h1>Administrador</h1>
-                    <div class="col-md-6">
-                        <h2>Lista de Utilizadores</h2>
+                    <h1 class="title-page">Administrador</h1>
+                    <hr class="bar-div" />
+                    <div class="col-md-6 div-home-page">
+                        <h2 class="subtitle-page">Lista de Utilizadores</h2>
                         <p>Estado e tipo de utilizadores</p>
-                        <a class="btn btn-primary" href="/Utilizadores"><i class="fa fa-users"></i> Listar</a>
+                        <a class="btn btn-primary btn-home-page" href="/Utilizadores"><i class="fa fa-users"></i> Listar</a>
                     </div>
                     <div class="col-md-6">
-                        <h2>Informações úteis</h2>
+                        <h2 class="subtitle-page">Informações úteis</h2>
                         <p>Últimas notificações.</p>
                         @* Passar id do utilizador ou id da junta *@
-                        <a class="btn btn-primary" href="/InformacoesUteis"><i class="fa fa-list"></i> Listar</a>
+                        <a class="btn btn-primary btn-home-page" href="/InformacoesUteis"><i class="fa fa-list"></i> Listar</a>
                     </div>
                 </div>
             }
