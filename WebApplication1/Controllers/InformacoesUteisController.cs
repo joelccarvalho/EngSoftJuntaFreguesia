@@ -222,10 +222,14 @@ namespace WebApplication1.Controllers
             {
                 foreach (var user in userCurrent)
                 {
-                    // Se o email não foi verificado ou for diferente de administrador
-                    if (user.Estado == 0 || user.TipoUtilizador.Tipo != "Administrador")
+                    // Se o email não foi verificado
+                    if (user.Estado == 0)
                     {
                         return 0;
+                    }
+                    else if(user.TipoUtilizador.Tipo == "Administrador" || user.TipoUtilizador.Tipo == "Membro da Junta") // permitido ao administrador e membro da junta
+                    {
+                        return 1;
                     }
                 }
 

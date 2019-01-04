@@ -22,8 +22,10 @@ namespace ModelProject
     class InformacoesUteisMetaData
     {
         public int ID { get; set; }
+        [Required]
         public string Assunto { get; set; }
         [Display(Name = "Descrição")]
+        [Required]
         public string Descricao { get; set; }
         [Display(Name = "Destinatário")]
         public Nullable<int> Destinatario { get; set; }
@@ -39,6 +41,7 @@ namespace ModelProject
         [Display(Name = "Tipo de Ocorrência")]
         public int IdOcorrencias { get; set; }
         [Display(Name = "Descrição")]
+        [Required]
         public string Descricao { get; set; }
         public string Anexos { get; set; }
     }

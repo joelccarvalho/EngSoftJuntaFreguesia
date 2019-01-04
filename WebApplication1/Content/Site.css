@@ -48,10 +48,10 @@ textarea {
 
 /* Navbar */
 .navbar-brand {
-    background: url(http://www.cm-barcelos.pt/logo.png) no-repeat;
+    background: url(https://www.cm-barcelos.pt/wp-content/uploads/2018/12/Logotipo-cmbarcelos-transparente-azul.png) no-repeat;
     margin: 5px;
     width: 260px;
-    background-size: 160px;
+    background-size: 135px;
 }
 
 .navbar {
@@ -147,4 +147,8 @@ textarea {
 .badge-danger {
     background-color: red !important;
     color: white !important;
+}
+
+.max-width-description {
+    max-width: 160px;
 }
