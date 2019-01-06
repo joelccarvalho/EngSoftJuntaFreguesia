@@ -24,40 +24,60 @@
                               where u.UserID == CurrentUserId
                               select u;
 
-            foreach (var user in userCurrent)
+            if (userCurrent.Count() > 0)
             {
-                <dt class="table-edit-data">Nome</dt>
-                <dd class="form-control-static">@user.Nome</dd>
-                <dt class="table-edit-data">Nome</dt>
-                <dd class="form-control-static">@user.NumCC</dd>
-                <dt class="table-edit-data">Nº de Eleitor</dt>
-                <dd class="form-control-static">@user.NumEleitor</dd>
-                <dt class="table-edit-data">Morada</dt>
-                <dd class="form-control-static">@user.Morada</dd>
-                <dt class="table-edit-data">Código Postal</dt>
-                <dd class="form-control-static">@user.CodigoPostal.Codigo</dd>
-                <dt class="table-edit-data">Email</dt>
-                <dd class="form-control-static">@user.Email</dd>
-                <dt class="table-edit-data">Nome Utilizador</dt>
-                <dd class="form-control-static">@user.NomeUtilizador</dd>
-                <dt class="table-edit-data">Estado</dt>
-                <dd class="form-control-static">@user.Estado</dd>
-                <dt class="table-edit-data">Tipo de utilizador</dt>
-                <dd class="form-control-static">@user.TipoUtilizador.Tipo</dd>
-
-                <p>
-                    @if (Model.HasPassword)
+                foreach (var user in userCurrent)
+                {
+                    if (user.Estado != 0)
                     {
-                        @Html.ActionLink("Alterar Password", "ChangePassword", "Manage", null, new { @class = "btn btn-default" })
+                        <dt class="table-edit-data">Nome</dt>
+                        <dd class="form-control-static">@user.Nome</dd>
+                        <dt class="table-edit-data">Nome</dt>
+                        <dd class="form-control-static">@user.NumCC</dd>
+                        <dt class="table-edit-data">Nº de Eleitor</dt>
+                        <dd class="form-control-static">@user.NumEleitor</dd>
+                        <dt class="table-edit-data">Morada</dt>
+                        <dd class="form-control-static">@user.Morada</dd>
+                        <dt class="table-edit-data">Código Postal</dt>
+                        <dd class="form-control-static">@user.CodigoPostal.Codigo</dd>
+                        <dt class="table-edit-data">Email</dt>
+                        <dd class="form-control-static">@user.Email</dd>
+                        <dt class="table-edit-data">Nome Utilizador</dt>
+                        <dd class="form-control-static">@user.NomeUtilizador</dd>
+                        <dt class="table-edit-data">Estado</dt>
+                        <dd class="form-control-static">@user.Estado</dd>
+                        <dt class="table-edit-data">Tipo de utilizador</dt>
+                        <dd class="form-control-static">@user.TipoUtilizador.Tipo</dd>
+
+                        <p>
+                            @if (Model.HasPassword)
+                            {
+                                @Html.ActionLink("Alterar Password", "ChangePassword", "Manage", null, new { @class = "btn btn-default" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Criar", "SetPassword", "Manage", null, new { @class = "btn btn-default" })
+                            }
+                            <a class="btn btn-primary" href="/Utilizadores/Edit/@user.ID"><i class="fa fa-pencil"></i> Editar</a>
+                        </p>
                     }
                     else
                     {
-                        @Html.ActionLink("Criar", "SetPassword", "Manage", null, new { @class = "btn btn-default" })
+                        <div class="jumbotron">
+                            <h1>Atenção @User.Identity.GetUserName()!</h1>
+                            <p class="lead"> Aguardar validação do registo. Obrigado!</p>
+                        </div>
                     }
-                    <a class="btn btn-primary" href="/Utilizadores/Edit/@user.ID"><i class="fa fa-pencil"></i> Editar</a>
-                </p>
+                }
+            }
+            else
+            {
+                <div class="jumbotron">
+                    <h1>Atenção @User.Identity.GetUserName()!</h1>
+                    <p class="lead text-danger"> Registo incompleto!</p>
+                    @Html.ActionLink("Editar", "Create", "Utilizadores", new { }, new { })
+                </div>
             }
         }
-
     </dl>
 </div>

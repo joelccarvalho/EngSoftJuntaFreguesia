@@ -69,6 +69,31 @@ textarea {
     font-weight: bold;
 }
 
+.navbar-inverse .navbar-toggle {
+    border-color: #c7dce2 !important;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #166d89;
+}
+
+.my-navbar:hover > .sub-navbar
+{
+    display: block;
+}
+
+.sub-navbar {
+    padding: 3px 20px;
+    list-style-type: none;
+}
+
+/* Diminuir menu */
+/*@media screen and (max-width: 995px) and (min-width: 600px) {
+    .navbar-nav {
+        font-size: 10px !important;
+    }
+}*/
+
 /* Tables */
 .title-table {
     text-align: center;
